@@ -67,23 +67,23 @@ Planned future options include:
 
 ## ▶️ Running the Project Locally
 
-### 1.Install dependencies
+### 1. Install dependencies
 Run the following command in your terminal:
 
 pip install -r requirements.txt
 
-### 2.Create a .env file
+### 2. Create a .env file
 In the project root directory, create a file named .env and add the following variables:
 
 OPENAI_API_KEY=your_openai_api_key
 FLASK_SECRET_KEY=your_secret_key
 
-### 3.Run the project in development mode
+### 3. Run the project in development mode
 Start the application using:
 
 python app.py
 
-### 4.Run the project in production-style mode
+### 4. Run the project in production-style mode
 To run the app with a production-ready server, use:
 
 gunicorn app:app
