@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ABC Grocery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- ================= HERO / MAIN PAGE ================= -->
+<div class="hero">
+    <div class="hero-overlay">
+        <h1>Welcome to ABC Grocery</h1>
+        <p>Fresh groceries. Free pickup. Fast delivery.</p>
+    </div>
+</div>
+
+<!-- ================= CHATBOT TOGGLE BUTTON ================= -->
+<div id="chat-toggle" onclick="toggleChat()">
+    🤖
+</div>
+
+<!-- ================= CHATBOT WINDOW ================= -->
+<div id="chatbot">
+
+    <div class="chat-header">
+        <span>🤖 ABC Grocery Assistant</span>
+        <button onclick="toggleChat()">✖</button>
+    </div>
+
+    <div id="chat">
+
+        <!-- Intro message (centered) -->
+        <div class="msg bot intro">
+            Hi! 👋 I’m the <b>ABC Grocery AI Assistant</b>.<br><br>
+            Ask me about delivery, store hours, returns, and more!
+        </div>
+
+    </div>
+
+    <div class="input-row">
+        <input id="input" placeholder="Ask about ABC Grocery..." />
+        <button onclick="send()">Send</button>
+    </div>
+
+</div>
+
+<script>
+function toggleChat() {
+    document.getElementById("chatbot").classList.toggle("open");
+}
+
+async function send() {
+    const input = document.getElementById("input");
+    const msg = input.value.trim();
+    if (!msg) return;
+    input.value = "";
+
+    const chat = document.getElementById("chat");
+
+    // User message
+    chat.innerHTML += `<div class="msg user">${msg}</div>`;
+    chat.scrollTop = chat.scrollHeight;
+
+    // Typing indicator
+    const typing = document.createElement("div");
+    typing.className = "msg bot typing";
+    typing.innerText = "…";
+    chat.appendChild(typing);
+    chat.scrollTop = chat.scrollHeight;
+
+    // Fetch bot reply
+    const res = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: msg})
+    });
+
+    const data = await res.json();
+
+    // Remove typing indicator
+    typing.remove();
+
+    // Bot reply
+    chat.innerHTML += `<div class="msg bot">${data.reply}</div>`;
+    chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
+</body>
+</html>

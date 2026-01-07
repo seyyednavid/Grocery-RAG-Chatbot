@@ -47,7 +47,7 @@ embedding = OpenAIEmbeddings(model ="text-embedding-3-small")
 vectorstore = Chroma.from_documents(documents=chunked_docs,
                                     embedding=embedding,
                                     collection_metadata={"hnsw:space":"cosine"},
-                                    persist_directory="abc_help_qa",
+                                    persist_directory="abc_vector_db_chroma",
                                     collection_name="abc_help_qa")
 
 
