@@ -26,11 +26,12 @@ retriever = vectorstore.as_retriever(
 
 # --- LLM ---
 llm = ChatOpenAI(
-    model="gpt-4o-mini",
-    temperature=0,
-    max_retries=2,
-    timeout=30
-)
+        model="gpt-5",
+        temperature=0,
+        max_tokens=None,
+        timeout=None,
+        max_retries=1,
+    )
 
 # --- Prompt ---
 prompt = ChatPromptTemplate.from_messages([
